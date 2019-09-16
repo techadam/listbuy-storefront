@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password', 'firstname', 'lastname','country_code','phone','user_type','phone_otp','verified','password_reset_code'
+        'email', 'password', 'firstname', 'lastname', 'country_code', 'phone', 'user_type', 'phone_otp', 'verified', 'password_reset_code',
     ];
 
     /**
@@ -24,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'phone_otp','password_reset_code'
+        'password', 'remember_token', 'phone_otp', 'password_reset_code',
     ];
 
     /**
@@ -36,8 +36,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-     public function routeNotificationForTwilio()
+    public function routeNotificationForTwilio()
     {
         return $this->phone;
     }
+
+
 }
