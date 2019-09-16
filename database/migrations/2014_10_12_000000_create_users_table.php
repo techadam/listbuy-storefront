@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('phone');
             $table->string("country_code");
+            $table->integer('password_reset_code')->nullable();
             $table->integer('phone_otp')->nullable();
             $table->string('email_token')->nullable();
             $table->boolean('verified')->default(false);
