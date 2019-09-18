@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,15 +15,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::post('/register','Api\AuthController@register');
 Route::post('/login','Api\AuthController@login');
 Route::post('/verify/{user}','Api\AuthController@verify');
 
-Route::get('/password/verify/{otp}', 'API\ForgotPasswordController@verifyResetCode');
-Route::post('/password/request', 'API\ForgotPasswordController@sendResetCodeEmail');
-Route::post('/password/reset', 'API\ForgotPasswordController@resetPassword');
+Route::get('/password/verify/{otp}', 'Api\ForgotPasswordController@verifyResetCode');
+Route::post('/password/request', 'Api\ForgotPasswordController@sendResetCodeEmail');
+Route::post('/password/reset', 'Api\ForgotPasswordController@resetPassword');
 
+Route::namespace('Api')->middleware(['auth.jwt'])->group(function () {
+    Route::post('/store', 'StoreController@store');
+    Route::put('/store/{store}', 'StoreController@update');
+
+});

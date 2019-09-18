@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Store;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -41,5 +42,9 @@ class User extends Authenticatable
         return $this->phone;
     }
 
+    public function store()
+    {
+        return $this->hasOne(Store::class);
+    }
 
 }
