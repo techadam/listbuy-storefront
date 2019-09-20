@@ -47,7 +47,7 @@ class User extends Authenticatable
         return $this->hasOne(Store::class);
     }
 
-    /* Scope a query to only include admins.
+    /* Scope a query to only include admin(s).
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
