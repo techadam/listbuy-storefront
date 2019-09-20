@@ -21,12 +21,12 @@ class AuthRegisterRequest extends CustomFormRequest
             'lastname' => 'required|string|max:255',
             'email' => 'required|unique:users',
             'password' => 'string|min:6',
-            'user_type' => 'required|In:seller,buyer',
+            'role' => 'required|In:seller,buyer',
             'phone' => [
                 'required',
                 Rule::phone()->countryField('country_code'),
                 Rule::unique('users')->where(function ($query) use ($data) {
-                    return $query->where([['phone', '=', $data['phone']], ['user_type', '=', $data['user_type']]]);
+                    return $query->where([['phone', '=', $data['phone']], ['role', '=', $data['role']]]);
                 }),
             ],
             'country_code' => 'required',

@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password', 'firstname', 'lastname', 'country_code', 'phone', 'user_type', 'phone_otp', 'verified', 'password_reset_code',
+        'email', 'password', 'firstname', 'lastname', 'country_code', 'phone', 'role', 'phone_otp', 'verified', 'password_reset_code',
     ];
 
     /**
@@ -45,6 +45,17 @@ class User extends Authenticatable
     public function store()
     {
         return $this->hasOne(Store::class);
+    }
+
+    /* Scope a query to only include admins.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+
+    public function scopeIsAdmin($query)
+    {
+        return $query->where('role', 'admin');
     }
 
 }

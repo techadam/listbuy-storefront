@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->string('email')->unique();
-            $table->enum('user_type', ['seller', 'buyer', 'admin']);
+            $table->enum('role', ['seller', 'buyer', 'admin']);
             $table->string('password');
             $table->string('phone');
             $table->string("country_code");
