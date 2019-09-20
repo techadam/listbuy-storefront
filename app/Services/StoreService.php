@@ -26,4 +26,9 @@ class StoreService
     {
         return tap($store)->update($data);
     }
+
+    public function getStoreProducts(Store $store, $limit = 50)
+    {
+        return $store->products()->paginate($limit);
+    }
 }
