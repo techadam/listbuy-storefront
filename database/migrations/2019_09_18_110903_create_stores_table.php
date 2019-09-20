@@ -17,11 +17,13 @@ class CreateStoresTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('name')->unique();
+            $table->string('slug')->unique();
             $table->string('email_address')->nullable();
             $table->string('products_type');
             $table->string('buyers_location');
             $table->text('description');
             $table->string('accepted_currencies');
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
     }
