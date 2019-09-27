@@ -62,7 +62,7 @@ class AuthController extends Controller
         // attempt authorization
         if (!$token = JWTAuth::attempt($credentials)) {
             // authorization failed
-            return $this->notFound('Invalid email or passowrd!', $credentials);
+            return $this->notFound('Invalid email or password!', $credentials);
         }
 
         $user = auth()->user();

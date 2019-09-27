@@ -13,15 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::post('/register', 'Api\AuthController@register');
-Route::post('/login', 'Api\AuthController@login');
-Route::post('/verify/{user}', 'Api\AuthController@verify');
+Route::namespace('Api')->prefix('auth')->group(function () {
+    Route::post('/register', 'AuthController@register');
+    Route::post('/login', 'AuthController@login');
+    Route::post('/verify/{user}', 'AuthController@verify');
 
-Route::get('/password/verify/{otp}', 'Api\ForgotPasswordController@verifyResetCode');
-Route::post('/password/request', 'Api\ForgotPasswordController@sendResetCodeEmail');
-Route::post('/password/reset', 'Api\ForgotPasswordController@resetPassword');
+    Route::get('/password/verify/{otp}', 'ForgotPasswordController@verifyResetCode');
+    Route::post('/password/request', 'ForgotPasswordController@sendResetCodeEmail');
+    Route::post('/password/reset', 'ForgotPasswordController@resetPassword');
+});
 
-Route::namespace ('Api')->middleware(['auth.jwt'])->group(function () {
+Route::namespace('Api')->middleware(['auth.jwt'])->group(function () {
     Route::post('/store', 'StoreController@store');
     Route::put('/store/{store}', 'StoreController@update');
     Route::get('/store/{store}/products', 'StoreController@getStoreProducts');
@@ -31,5 +33,8 @@ Route::namespace ('Api')->middleware(['auth.jwt'])->group(function () {
     Route::get('/products/active', 'ProductsController@getActiveStoresProducts');
     Route::get('/product/{slug}', 'ProductsController@getProduct');
     Route::put('/product/{product}', 'ProductsController@updateProduct');
+
+    Route::post('/order/process','OrdersController@processOrder');
+
 
 });
