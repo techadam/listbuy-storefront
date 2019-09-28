@@ -3,9 +3,12 @@
 namespace App\Service;
 
 use App\Helpers\Constants;
+use App\Mail\StoreOrderPlaced;
+use App\Mail\UserOrderPlaced;
 use App\Models\Orders;
 use App\Models\PaymentRecords;
 use App\Models\Products;
+use Illuminate\Support\Facades\Mail;
 
 class OrderService
 {
@@ -33,16 +36,22 @@ class OrderService
 
             /* Store order products in DB */
             $order->products()->createMany($order_data['products']);
+            /* load relationships */
+            $order->load('store', 'payment_record', 'products');
 
-            return $order->load('payment_record');
+            /* Queue emails */
+            Mail::to(["email" => $order->store->email_address])->send(new StoreOrderPlaced(auth()->user(), $order));
+            Mail::to(["email" => auth()->user()->email])->send(new UserOrderPlaced(auth()->user(), $order));
+
+            return collect($order)->except(['products', 'store']);
         }
 
     }
 
-
     /**
      *  Calculates and returns total price of order
-     *  @return  int Total price of items
+     * @param $order
+     * @return  int Total price of items
      */
     private function calculateTotalPrice($order)
     {
