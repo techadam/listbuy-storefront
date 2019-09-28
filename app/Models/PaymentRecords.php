@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class PaymentRecords extends Model
 {
     protected $fillable = ['store_id', 'user_id', 'order_id', 'reference_id', 'amount', 'payment_processor', 'payment_method', 'currency', 'status'];
+
     public function order()
     {
         return $this->belongsTo(Orders::class);
@@ -22,6 +23,6 @@ class PaymentRecords extends Model
 
     public function buyer()
     {
-        return $this->belongsTo(User::class,'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

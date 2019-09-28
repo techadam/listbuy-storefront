@@ -33,6 +33,7 @@ class StripePaymentService implements PaymentServiceInterface
         try {
             $key = env('APP_ENV') == "local" ? env('STRIPE_TEST_KEY') : env('STRIPE_LIVE_KEY');
             Stripe::setApiKey($key);
+            /* TODO: check for amount calculation */
             $charge = Charge::create(['amount' => ($order_data['total_price'] * 100), 'currency' => $order_data['currency'] ? $order_data['currency'] : 'usd', 'source' => $order_data['stripe_source']]);
             return $charge;
         } catch (\Exception $error) {
