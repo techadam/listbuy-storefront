@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::namespace('Api')->prefix('auth')->group(function () {
+Route::namespace ('Api')->prefix('auth')->group(function () {
     Route::post('/register', 'AuthController@register');
     Route::post('/login', 'AuthController@login');
     Route::post('/verify/{user}', 'AuthController@verify');
@@ -23,7 +23,15 @@ Route::namespace('Api')->prefix('auth')->group(function () {
     Route::post('/password/reset', 'ForgotPasswordController@resetPassword');
 });
 
-Route::namespace('Api')->middleware(['auth.jwt'])->group(function () {
+Route::namespace ('Api')->prefix('import')->group(function () {
+    Route::post('/states', 'ImportController@importStates');
+    Route::post('/delivery/zone/tariff', 'ImportController@importZoneTariff');
+    Route::post('/delivery/zones', 'ImportController@importDeliveryZones');
+    Route::post('/delivery/weight', 'ImportController@importDeliveryWeight');
+    Route::post('/delivery/tariffs', 'ImportController@importDeliveryTariffs');
+});
+
+Route::namespace ('Api')->middleware(['auth.jwt'])->group(function () {
     Route::post('/store', 'StoreController@store');
     Route::put('/store/{store}', 'StoreController@update');
     Route::get('/store/{store}/products', 'StoreController@getStoreProducts');
@@ -34,8 +42,7 @@ Route::namespace('Api')->middleware(['auth.jwt'])->group(function () {
     Route::get('/product/{slug}', 'ProductsController@getProduct');
     Route::put('/product/{product}', 'ProductsController@updateProduct');
 
-    Route::get('/order/me/','OrdersController@getUserOrders');
-    Route::post('/order/process','OrdersController@processOrder');
-
+    Route::get('/order/me/', 'OrdersController@getUserOrders');
+    Route::post('/order/process', 'OrdersController@processOrder');
 
 });
