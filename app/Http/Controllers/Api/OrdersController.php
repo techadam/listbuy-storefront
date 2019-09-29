@@ -22,9 +22,10 @@ class OrdersController extends Controller
         return $this->created($order, "Order successfully placed!");
     }
 
-    public function getDeliveryFee(Request $request)
+    public function getUserOrders(Request $request)
     {
-        $order = $this->order_service->processOrder($request->validated());
-        return $this->created($order, "Order successfully placed!");
+        $orders = $this->order_service->getUserOrder($request->user()->username);
+        return $this->success($orders);
     }
+
 }

@@ -34,6 +34,7 @@ Route::namespace('Api')->middleware(['auth.jwt'])->group(function () {
     Route::get('/product/{slug}', 'ProductsController@getProduct');
     Route::put('/product/{product}', 'ProductsController@updateProduct');
 
+    Route::get('/order/me/','OrdersController@getUserOrders');
     Route::post('/order/process','OrdersController@processOrder');
 
 
