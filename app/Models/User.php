@@ -5,10 +5,23 @@ namespace App\Models;
 use App\Models\Store;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasSlug;
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(['firstname', 'lastname'])
+            ->saveSlugsTo('username')
+            ->slugsShouldBeNoLongerThan(50);
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +29,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password', 'firstname', 'lastname', 'country_code', 'phone', 'role', 'phone_otp', 'verified', 'password_reset_code',
+        'email', 'username', 'password', 'firstname', 'lastname', 'country_code', 'phone', 'role', 'phone_otp', 'verified', 'password_reset_code',
     ];
 
     /**
@@ -56,6 +69,17 @@ class User extends Authenticatable
     public function scopeIsAdmin($query)
     {
         return $query->where('role', 'admin');
+    }
+
+    /* Scope a query to only include a user with `$username`.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+
+    public function scopeUsername($query,$username)
+    {
+        return $query->where('username', $username);
     }
 
 }
