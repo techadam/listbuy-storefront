@@ -32,17 +32,30 @@ Route::namespace ('Api')->prefix('import')->group(function () {
 });
 
 Route::namespace ('Api')->middleware(['auth.jwt'])->group(function () {
-    Route::post('/store', 'StoreController@store');
-    Route::put('/store/{store}', 'StoreController@update');
-    Route::get('/store/{store}/products', 'StoreController@getStoreProducts');
+    Route::prefix('store')->group(function () {
+        Route::post('/', 'StoreController@store');
+        Route::put('/{store}', 'StoreController@update');
+        Route::get('/{store}/products', 'StoreController@getStoreProducts');
+    });
 
-    Route::post('/product', 'ProductsController@addProduct');
-    Route::get('/products', 'ProductsController@getProducts');
-    Route::get('/products/active', 'ProductsController@getActiveStoresProducts');
-    Route::get('/product/{slug}', 'ProductsController@getProduct');
-    Route::put('/product/{product}', 'ProductsController@updateProduct');
+    Route::prefix('product')->group(function () {
+        Route::post('/', 'ProductsController@addProduct');
+        Route::get('/{slug}', 'ProductsController@getProduct');
+        Route::put('/{product}', 'ProductsController@updateProduct');
+    });
 
-    Route::get('/order/me/', 'OrdersController@getUserOrders');
-    Route::post('/order/process', 'OrdersController@processOrder');
+    Route::prefix('products')->group(function () {
+        Route::get('/', 'ProductsController@getProducts');
+        Route::get('/active', 'ProductsController@getActiveStoresProducts');
+    });
+
+    Route::prefix('order')->group(function () {
+        Route::get('/me', 'OrdersController@getUserOrders');
+        Route::post('/process', 'OrdersController@processOrder');
+    });
+
+    Route::prefix('delivery')->group(function () {
+        Route::get('/price', 'DeliveryController@getDeliveryPrice');
+    });
 
 });
