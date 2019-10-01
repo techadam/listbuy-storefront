@@ -49,7 +49,7 @@ class OrderService
 
     }
 
-    public function getUserOrder($username)
+    public function getUserOrders($username)
     {
         return Orders::with(['store','products'])->without(['products.store'])->whereHas('buyer', function (Builder $query) use ($username) {
             $query->username($username);

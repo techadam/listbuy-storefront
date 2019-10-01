@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
+use App\Service\OrderService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProcessOrderRequest;
-use App\Service\OrderService;
-use Symfony\Component\HttpFoundation\Request;
 
 class OrdersController extends Controller
 {
@@ -24,7 +24,7 @@ class OrdersController extends Controller
 
     public function getUserOrders(Request $request)
     {
-        $orders = $this->order_service->getUserOrder($request->user()->username);
+        $orders = $this->order_service->getUserOrders($request->user()->username);
         return $this->success($orders);
     }
 
