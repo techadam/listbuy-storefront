@@ -8,8 +8,9 @@ class DeliveryZoneTariff extends Model
 {
 
     protected $fillable = ['sending_state_code', 'receiving_state_code', 'delivery_zone_id'];
-    public function price()
+
+    public function zone()
     {
-// return $this->hasOne(DeliveryTariff)
+        return $this->belongsTo(DeliveryZones::class, "delivery_zone_id", "id");
     }
 }
