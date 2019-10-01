@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCreationRequest;
-use App\Http\Requests\UpdateStoreRequest;
 use App\Models\Store;
+use Illuminate\Http\Request;
 use App\Service\StoreService;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateStoreRequest;
+use App\Http\Requests\StoreCreationRequest;
 
 class StoreController extends Controller
 {
@@ -35,5 +36,11 @@ class StoreController extends Controller
     {
         $products = $this->store_service->getStoreProducts($store);
         return $this->success($products);
+    }
+
+    public function getUserStore(Request $request)
+    {
+        $store = $this->store_service->getUserStore($request->user()->username);
+        return $this->success($store);
     }
 }

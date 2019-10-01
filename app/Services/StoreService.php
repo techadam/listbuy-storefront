@@ -2,8 +2,9 @@
 
 namespace App\Service;
 
-use App\Models\Store;
 use App\Models\User;
+use App\Models\Store;
+use Illuminate\Database\Eloquent\Builder;
 
 class StoreService
 {
@@ -30,5 +31,13 @@ class StoreService
     public function getStoreProducts(Store $store, $limit = 50)
     {
         return $store->products()->paginate($limit);
+    }
+
+    public function getUserStore($username)
+    {
+        return Store::whereHas('owner', function (Builder $query) use ($username) {
+            $query->username($username);
+        })->first();
+
     }
 }
