@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\User;
 use App\Models\Products;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model
 {
@@ -23,10 +23,17 @@ class Store extends Model
     ];
 
     protected $casts = [
-        'accepted_currencies' => 'array', // Will convarted to (Array)
+        'accepted_currencies' => 'array', // Will cast to (Array)
     ];
 
     protected $hidden = ['created_at', 'updated_at'];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['has_products'];
 
     /**
      * Get the options for generating the slug.
@@ -42,7 +49,7 @@ class Store extends Model
 
     public function owner()
     {
-        return $this->belongsTo(User::class,"user_id");
+        return $this->belongsTo(User::class, "user_id");
     }
 
     public function products()
@@ -59,6 +66,16 @@ class Store extends Model
     {
 
         return $query->where('is_active', true);
+    }
+
+    /**
+     * Get the hasProducts flag for the store.
+     *
+     * @return bool
+     */
+    public function getHasProductsAttribute()
+    {
+        return $this->attributes['has_products'] = (bool) $this->products()->count();
     }
 
     /**
