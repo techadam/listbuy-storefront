@@ -18,7 +18,7 @@ class StoreService
         $store = $user->store()->create($data);
         $user->store_id = $store->id;
         $user->save();
-        $store->user()->associate($user);
+        $store->owner()->associate($user);
         return tap($store)->save();
     }
 
