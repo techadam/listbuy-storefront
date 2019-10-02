@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "crazybooot/base64-validation": "^1.0",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.3",
         "jrm2k6/cloudder": "^0.6.0",

@@ -24,7 +24,7 @@ class AddProductRequest extends CustomFormRequest
             'status' => 'required|string',
             'shipping_option' => 'required|string|In:in_app_shipping,store_shipping',
             'images' => 'required|array',
-            'images.*' => 'required|image|mimes:jpeg,png,jpg,svg|max:5048',
+            'images.*' => 'bail|required|string|base64image|base64mimes:jpeg,png,jpg,svg|base64max:5048',
         ];
     }
 }
