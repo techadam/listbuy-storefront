@@ -12,6 +12,8 @@ class Store extends Model
 {
     use HasSlug;
 
+    protected $with = ['bankDetails'];
+
     protected $fillable = [
         'user_id',
         'name',
@@ -55,6 +57,11 @@ class Store extends Model
     public function products()
     {
         return $this->hasMany(Products::class);
+    }
+
+    public function bankDetails()
+    {
+        return $this->hasOne(StoreBankDetails::class);
     }
 
     /* Scope a query to only include active stores.

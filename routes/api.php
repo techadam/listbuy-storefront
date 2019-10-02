@@ -38,6 +38,8 @@ Route::namespace ('Api')->middleware(['auth.jwt'])->group(function () {
         Route::post('/', 'StoreController@store');
         Route::put('/{store}', 'StoreController@update');
         Route::get('/{store}/products', 'StoreController@getStoreProducts');
+        Route::post('{store}/bank', 'StoreBankDetailsController@saveUserStoreBankDetails');
+        Route::put('{store}/bank', 'StoreBankDetailsController@updateUserStoreBankDetails');
       });
 
     Route::prefix('product')->group(function () {
@@ -60,5 +62,6 @@ Route::namespace ('Api')->middleware(['auth.jwt'])->group(function () {
         Route::get('/price', 'DeliveryController@getDeliveryPrice');
         Route::get('/states', 'DeliveryController@getDeliveryStates');
     });
+
 
 });
