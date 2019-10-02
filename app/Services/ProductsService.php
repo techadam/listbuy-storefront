@@ -26,12 +26,12 @@ class ProductsService
         }
 
         $product_model->images()->createMany($images);
-        return Products::where('id', $product_model->id)->without('store')->first();
+        return Products::where('id', $product_model->id)->first();
     }
 
     public function getProduct($product_slug)
     {
-        return Products::where('slug', $product_slug)->first();
+        return Products::with('store')->where('slug', $product_slug)->first();
     }
 
     public function getAllActiveStoresProducts($limit = 50)
@@ -43,7 +43,7 @@ class ProductsService
 
     public function getAllProducts($limit = 50)
     {
-        return Products::paginate($limit);
+        return Products::with('store')->paginate($limit);
     }
 
     public function updateProduct(Products $product, $data)

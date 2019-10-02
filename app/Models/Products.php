@@ -10,7 +10,7 @@ use Spatie\Sluggable\SlugOptions;
 class Products extends Model
 {
     use HasSlug;
-    protected $with = ['images', 'store'];
+    protected $with = ['images'];
     protected $fillable = ['name', 'description', 'price', 'product_type', 'weight', 'stock', 'status', 'shipping_option', 'slug'];
 
     /**
