@@ -16,6 +16,6 @@ class StoreBankDetailService
     {
 
         $store->bank_details()->update($bank_details);
-        return $store->bankDetails->fresh();
+        return $store->bank_details->fresh();
     }
 }
