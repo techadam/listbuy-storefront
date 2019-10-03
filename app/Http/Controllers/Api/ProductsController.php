@@ -31,13 +31,19 @@ class ProductsController extends Controller
     public function updateProduct(UpdateProductRequest $request, Products $product)
     {
         $product_data = $this->product_service->updateProduct($product, $request->validated());
-        return $this->success($product_data, "Product updated sucessfully!");
+        return $this->success($product_data, "Product updated successfully!");
     }
 
     public function getProducts()
     {
         $product_data = $this->product_service->getAllProducts();
         return $this->success($product_data);
+    }
+
+    public function deleteProduct($product_slug)
+    {
+        $product_data = $this->product_service->deleteProduct($product_slug);
+        return $this->success($product_data,"$product_slug deleted successfully!");
     }
 
     public function getActiveStoresProducts()

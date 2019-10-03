@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Models\Products;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 use JD\Cloudder\Facades\Cloudder;
 
 class ProductsService
@@ -22,7 +23,7 @@ class ProductsService
 
         for ($i = 0; $i < count($product['images']); $i++) {
             Cloudder::upload($product['images'][$i], null, array("use_filename" => true, "folder" => env('PRODUCT_LISTING_IMAGE_CLOUD_PATH')));
-            array_push($images, ['url' => Cloudder::getResult()['secure_url']]);
+            array_push($images, ['url' => Cloudder::getResult()['secure_url'], 'cloudinary_id' => Cloudder::getResult()['public_id']]);
         }
 
         $product_model->images()->createMany($images);
@@ -50,4 +51,14 @@ class ProductsService
     {
         return tap($product)->update($data);
     }
+
+    public function deleteProduct($product_slug)
+    {
+        $product = Products::where('slug', $product_slug)->firstOrFail();
+        $cloudinaryIds = Arr::pluck($product->images, 'cloudinary_id');
+        Cloudder::destroyImages($cloudinaryIds);
+        $product->images()->delete();
+        return $product->delete();
+    }
+
 }
