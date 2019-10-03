@@ -31,6 +31,8 @@ class UpdateProductRequest extends CustomFormRequest
             'stock' => 'numeric',
             'status' => 'string',
             'shipping_option' => 'string|In:in_app_shipping,store_shipping',
+            'images' => 'array',
+            'images.*' => 'bail|required|string|base64image|base64mimes:jpeg,png,jpg,svg|base64max:5048',
         ];
     }
 }

@@ -49,7 +49,16 @@ class ProductsService
 
     public function updateProduct(Products $product, $data)
     {
-        return tap($product)->update($data);
+        if (isset($data['images'])) {
+            $images = [];
+            for ($i = 0; $i < count($data['images']); $i++) {
+                Cloudder::upload($data['images'][$i], null, array("use_filename" => true, "folder" => env('PRODUCT_LISTING_IMAGE_CLOUD_PATH')));
+                array_push($images, ['url' => Cloudder::getResult()['secure_url'], 'cloudinary_id' => Cloudder::getResult()['public_id']]);
+            }
+            $product->images()->createMany($images);
+        }
+        $product->update($data);
+        return $product->load('images');
     }
 
     public function deleteProduct($product_slug)
