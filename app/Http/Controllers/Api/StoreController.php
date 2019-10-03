@@ -43,4 +43,10 @@ class StoreController extends Controller
         $store = $this->store_service->getUserStore($request->user()->username);
         return $this->success($store);
     }
+
+    public function getStoreDetails($slug)
+    {
+        $store = $this->store_service->getStore($slug);
+        return $this->success($store);
+    }
 }

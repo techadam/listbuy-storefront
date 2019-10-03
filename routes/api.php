@@ -29,6 +29,7 @@ Route::namespace ('Api')->group(function () {
     });
 
     Route::prefix('store')->group(function () {
+        Route::get('/{store}', 'StoreController@getStoreDetails');
         Route::get('/{store}/products', 'StoreController@getStoreProducts');
     });
 

@@ -2,8 +2,8 @@
 
 namespace App\Service;
 
-use App\Models\User;
 use App\Models\Store;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
 class StoreService
@@ -38,6 +38,12 @@ class StoreService
         return Store::whereHas('owner', function (Builder $query) use ($username) {
             $query->username($username);
         })->first();
+
+    }
+
+    public function getStore($slug)
+    {
+        return Store::without('bankDetails')->where('slug', $slug)->first();
 
     }
 }
