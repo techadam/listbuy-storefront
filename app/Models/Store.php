@@ -12,8 +12,6 @@ class Store extends Model
 {
     use HasSlug;
 
-    protected $with = ['bankDetails'];
-
     protected $fillable = [
         'user_id',
         'name',
@@ -59,7 +57,7 @@ class Store extends Model
         return $this->hasMany(Products::class);
     }
 
-    public function bankDetails()
+    public function bank_details()
     {
         return $this->hasOne(StoreBankDetails::class);
     }

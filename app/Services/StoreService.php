@@ -35,7 +35,7 @@ class StoreService
 
     public function getUserStore($username)
     {
-        return Store::whereHas('owner', function (Builder $query) use ($username) {
+        return Store::with('bank_details')->whereHas('owner', function (Builder $query) use ($username) {
             $query->username($username);
         })->first();
 
@@ -43,7 +43,7 @@ class StoreService
 
     public function getStore($slug)
     {
-        return Store::without('bankDetails')->where('slug', $slug)->first();
+        return Store::with(['owner'])->where('slug', $slug)->first();
 
     }
 }
