@@ -45,7 +45,6 @@ Route::namespace ('Api')->group(function () {
 
         Route::prefix('product')->group(function () {
             Route::post('/', 'ProductsController@addProduct');
-            Route::get('/{slug}', 'ProductsController@getProduct');
             Route::put('/{product}', 'ProductsController@updateProduct');
         });
 
