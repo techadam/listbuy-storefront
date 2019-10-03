@@ -65,7 +65,8 @@ class AuthController extends Controller
             return $this->notFound('Invalid email or password!', $credentials);
         }
 
-        $user = auth()->user();
+        $user_service = new \App\Service\UserService();
+        $user = $user_service->getUserInfo(auth()->user()->username, ['store', 'store.bank_details']);
         return $this->success(['token' => $token, 'user' => $user]);
     }
 
@@ -106,7 +107,7 @@ class AuthController extends Controller
         $validated = $validator->validated();
 
         if ($validated['otp'] == $user->phone_otp) {
-           $user = $user_service->updateUserInfo($user, ['verified' => true]);
+            $user = $user_service->updateUserInfo($user, ['verified' => true]);
             return $this->success($user, "User account verified!");
         }
 

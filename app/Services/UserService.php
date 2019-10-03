@@ -10,4 +10,9 @@ class UserService
     {
         return tap($user)->update($data);
     }
+
+    public function getUserInfo($username, $with = [])
+    {
+        return User::with($with)->where('username', $username)->firstOrFail();
+    }
 }

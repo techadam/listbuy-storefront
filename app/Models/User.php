@@ -50,8 +50,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected $with = ['store'];
-
     public function routeNotificationForTwilio()
     {
         return $this->phone;
