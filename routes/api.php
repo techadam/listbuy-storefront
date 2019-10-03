@@ -35,6 +35,10 @@ Route::namespace ('Api')->group(function () {
 
     /* Authenticated routes */
     Route::middleware(['auth.jwt'])->group(function () {
+        Route::prefix('auth')->group(function () {
+            Route::put('/password/change', 'AuthController@ChangePassword');
+        });
+
         Route::prefix('store')->group(function () {
             Route::get('/user/me', 'StoreController@getUserStore');
             Route::post('/', 'StoreController@store');

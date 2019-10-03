@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRegisterRequest;
 use App\Models\User;
 use App\Notifications\VerificationCode;
+use App\Service\AuthService;
 use App\Service\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,16 +15,11 @@ use Propaganistas\LaravelPhone\PhoneNumber;
 
 class AuthController extends Controller
 {
-    protected $service;
+    protected $auth_service;
 
-    public function __construct(UserService $service)
+    public function __construct(AuthService $auth_service)
     {
-        $this->service = $service;
-    }
-
-    public function service()
-    {
-        return $this->service;
+        $this->auth_service = $auth_service;
     }
 
     /**
@@ -55,7 +51,7 @@ class AuthController extends Controller
      *
      * Uses basic authentication and returns a Json Web Token
      */
-    public function login(Request $request)
+    public function login(Request $request, UserService $user_service)
     {
         $credentials = $request->only('email', 'password');
 
@@ -65,7 +61,6 @@ class AuthController extends Controller
             return $this->notFound('Invalid email or password!', $credentials);
         }
 
-        $user_service = new \App\Service\UserService();
         $user = $user_service->getUserInfo(auth()->user()->username, ['store', 'store.bank_details']);
         return $this->success(['token' => $token, 'user' => $user]);
     }
@@ -112,6 +107,23 @@ class AuthController extends Controller
         }
 
         return $this->badRequest("Invalid OTP entered!");
+    }
+
+    public function ChangePassword(Request $request)
+    {
+        $validator = validator($request->all(), [
+            'newPassword' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->badRequest("New Password required!", $validator->getMessageBag());
+        }
+
+        $validated = $validator->validated();
+
+        $user = $this->auth_service->UpdatePassword(auth()->user()->username, $validated['newPassword']);
+        return $this->success([], 'Password updated successfully!');
+
     }
 
 }
