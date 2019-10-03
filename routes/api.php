@@ -36,7 +36,7 @@ Route::namespace ('Api')->group(function () {
     /* Authenticated routes */
     Route::middleware(['auth.jwt'])->group(function () {
         Route::prefix('store')->group(function () {
-            Route::get('/me', 'StoreController@getUserStore');
+            Route::get('/user/me', 'StoreController@getUserStore');
             Route::post('/', 'StoreController@store');
             Route::put('/{store}', 'StoreController@update');
             Route::post('{store}/bank', 'StoreBankDetailsController@saveUserStoreBankDetails');
