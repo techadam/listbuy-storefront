@@ -20,7 +20,7 @@ class OrdersController extends Controller
     {
         $order = $this->order_service->processOrder($request->validated());
         if (isset($order['error'])) {
-            return $this->custom($order, $order['message'], false, 500);
+            return $this->custom($order, $order['error'], false, 500);
         }
         return $this->created($order, "Order successfully placed!");
     }
