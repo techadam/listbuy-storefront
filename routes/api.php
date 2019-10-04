@@ -33,6 +33,11 @@ Route::namespace ('Api')->group(function () {
         Route::get('/{store}/products', 'StoreController@getStoreProducts');
     });
 
+    Route::prefix('delivery')->group(function () {
+        Route::get('/price', 'DeliveryController@getDeliveryPrice');
+        Route::get('/states', 'DeliveryController@getDeliveryStates');
+    });
+
     /* Authenticated routes */
     Route::middleware(['auth.jwt'])->group(function () {
         Route::prefix('auth')->group(function () {
@@ -61,11 +66,6 @@ Route::namespace ('Api')->group(function () {
         Route::prefix('order')->group(function () {
             Route::get('/me', 'OrdersController@getUserOrders');
             Route::post('/process', 'OrdersController@processOrder');
-        });
-
-        Route::prefix('delivery')->group(function () {
-            Route::get('/price', 'DeliveryController@getDeliveryPrice');
-            Route::get('/states', 'DeliveryController@getDeliveryStates');
         });
 
         Route::prefix('import')->group(function () {
