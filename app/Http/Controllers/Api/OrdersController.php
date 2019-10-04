@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use App\Service\OrderService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProcessOrderRequest;
+use App\Service\OrderService;
+use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
@@ -19,6 +19,9 @@ class OrdersController extends Controller
     public function processOrder(ProcessOrderRequest $request)
     {
         $order = $this->order_service->processOrder($request->validated());
+        if (isset($order['error'])) {
+            return $this->custom($order, $order['message'], false, 500);
+        }
         return $this->created($order, "Order successfully placed!");
     }
 

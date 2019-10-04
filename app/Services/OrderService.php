@@ -45,6 +45,8 @@ class OrderService
             Mail::to(["email" => $order_data['buyer_email']])->send(new UserOrderPlaced($order));
 
             return collect($order)->except(['products', 'store']);
+        } else {
+            return ["status" => false, "message" => $payment_res['error']];
         }
 
     }
