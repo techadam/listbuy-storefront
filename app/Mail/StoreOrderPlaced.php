@@ -20,7 +20,7 @@ class StoreOrderPlaced extends Mailable implements ShouldQueue
      *
      * @param Orders $order
      */
-    public function __construct(Authenticatable $user, Orders $order)
+    public function __construct(array $user, Orders $order)
     {
         $this->order = $order;
         $this->user = $user;

@@ -33,7 +33,7 @@ class OrderService
 
             /* update payment record with order_id */
             $payment_record->order()->associate($order);
-            $payment_record->save();
+            $payment_record->saveOrFail();
 
             /* Store order products in DB */
             $order->products()->createMany($order_data['products']);
@@ -41,8 +41,8 @@ class OrderService
             $order->load('store', 'payment_record', 'products');
 
             /* Queue emails */
-            Mail::to(["email" => $order->store->email_address])->send(new StoreOrderPlaced(auth()->user(), $order));
-            Mail::to(["email" => auth()->user()->email])->send(new UserOrderPlaced(auth()->user(), $order));
+            Mail::to(["email" => $order->store->email_address])->send(new StoreOrderPlaced(['name' => $order_data['buyer_name']], $order));
+            Mail::to(["email" => $order_data['buyer_email']])->send(new UserOrderPlaced($order));
 
             return collect($order)->except(['products', 'store']);
         }

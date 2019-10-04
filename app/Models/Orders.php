@@ -7,8 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 class Orders extends Model
 {
     protected $with = ['payment_record'];
-    protected $fillable = ['generated_id', 'store_id', 'user_id', 'payment_record_id', 'amount', 'shipping_address', 'status'];
-
+    protected $fillable = [
+        'generated_id',
+        'store_id',
+        'user_id',
+        'payment_record_id',
+        'amount',
+        'shipping_address',
+        'buyer_email',
+        'buyer_name',
+        'buyer_phone',
+        'dest_state',
+        'dest_country',
+        'status',
+    ];
 
     public function store()
     {

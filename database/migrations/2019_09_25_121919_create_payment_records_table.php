@@ -16,7 +16,7 @@ class CreatePaymentRecordsTable extends Migration
         Schema::create('payment_records', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('order_id')->nullable();
             $table->string('reference_id');
             $table->string('amount');

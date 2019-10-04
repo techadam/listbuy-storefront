@@ -13,17 +13,15 @@ class UserOrderPlaced extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
     private $order;
-    private $user;
 
     /**
      * Create a new message instance.
      *
      * @param Orders $order
      */
-    public function __construct(Authenticatable $user, Orders $order)
+    public function __construct(Orders $order)
     {
         $this->order = $order;
-        $this->user = $user;
     }
 
     /**
@@ -33,7 +31,7 @@ class UserOrderPlaced extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->subject("Your order {$this->order->generated_id} has been placed")->view('emails.user.order_placed', ['order' => $this->order, "user" => $this->user]);
+        return $this->subject("Your order {$this->order->generated_id} has been placed")->view('emails.user.order_placed', ['order' => $this->order]);
     }
 
 }

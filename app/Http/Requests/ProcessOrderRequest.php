@@ -20,12 +20,8 @@ class ProcessOrderRequest extends CustomFormRequest
         return [
             'store_id' => 'required|exists:stores,id',
             'buyer_name' => 'required',
-            'buyer_email' => 'required',
-            'buyer_phone' => [
-                'required',
-                Rule::phone()->countryField('country_code'),
-            ],
-            'country_code' => 'required',
+            'buyer_email' => 'required|email',
+            'buyer_phone' => 'required',
             'products' => 'required|array',
             'products.*.product_id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|numeric',
@@ -35,6 +31,8 @@ class ProcessOrderRequest extends CustomFormRequest
                 Rule::in(Constants::STRIPE_PAYMENT, Constants::VOUGE_PAYMENT),
             ],
             'reference_id' => Rule::requiredIf($data['payment_method'] != Constants::STRIPE_PAYMENT),
+            'dest_state' => 'required|exists:states,code',
+            'dest_country' => 'required',
             'shipping_address' => 'required',
             'stripe_source' => Rule::requiredIf($data['payment_method'] == Constants::STRIPE_PAYMENT),
         ];
