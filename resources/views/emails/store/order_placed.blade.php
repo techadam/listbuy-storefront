@@ -53,7 +53,7 @@
                                         style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; padding: 35px;">
                                         <h1
                                             style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #2F3133; font-size: 19px; font-weight: bold; margin-top: 0; text-align: left;">
-                                            New Order From {{ $user->name}}</h1>
+                                            New Order From {{ $user['name']}}</h1>
                                         <p
                                             style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
                                             A new order <span title="order id"><b>({{$order->generated_id}})</b></span> has been placed on your store. Please <a href=""
