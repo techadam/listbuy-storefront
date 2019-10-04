@@ -37,7 +37,7 @@ class StripePaymentService implements PaymentServiceInterface
             $charge = Charge::create(['amount' => ($order_data['total_price'] * 100), 'currency' => $order_data['currency'] ? $order_data['currency'] : 'usd', 'source' => $order_data['stripe_source']]);
             return $charge;
         } catch (\Exception $error) {
-            return $error->getJsonBody();
+            return ['error' => $error->getMessage()];
         }
     }
 }

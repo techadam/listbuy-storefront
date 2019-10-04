@@ -18,7 +18,7 @@ class OrderService
         $order_data['total_price'] = $this->calculateTotalPrice($order_data);
         $payment_service = $this->getPaymentProcessorService($order_data['payment_method']);
         $payment_res = $payment_service->processPayment($order_data);
-dd($payment_res);
+
         if (isset($payment_res['status']) && $payment_res['status'] == "paid") {
             $payment_record = new PaymentRecords($payment_res);
             $payment_record->store()->associate($order_data['store_id']);
@@ -46,7 +46,7 @@ dd($payment_res);
 
             return collect($order)->except(['products', 'store']);
         } else {
-            return ["status" => false, "message" => $payment_res['error']];
+            return ["message" => $payment_res['error']];
         }
 
     }
