@@ -99,9 +99,12 @@
                                                     <tr>
                                                         <td
                                                             style="text-align: center; font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0;">
-                                                            <img style="width: 60px; height: 60px; object-fit: cover;"
-                                                                src="{{$product_record->product->images[0]->url}}"
-                                                                alt="Product image">
+                                                          @if (isset($product_record->product->images[0]))
+
+                                                          <img style="width: 60px; height: 60px; object-fit: cover;"
+                                                              src="{{$product_record->product->images[0]->url}}"
+                                                              alt="Product image">
+                                                          @endif
                                                         </td>
                                                         <td
                                                             style="text-align: center; font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0;">
