@@ -38,6 +38,10 @@ Route::namespace ('Api')->group(function () {
         Route::get('/states', 'DeliveryController@getDeliveryStates');
     });
 
+    Route::prefix('order')->group(function () {
+        Route::post('/process', 'OrdersController@processOrder');
+    });
+
     /* Authenticated routes */
     Route::middleware(['auth.jwt'])->group(function () {
         Route::prefix('auth')->group(function () {
@@ -65,7 +69,6 @@ Route::namespace ('Api')->group(function () {
 
         Route::prefix('order')->group(function () {
             Route::get('/me', 'OrdersController@getUserOrders');
-            Route::post('/process', 'OrdersController@processOrder');
         });
 
         Route::prefix('import')->group(function () {
