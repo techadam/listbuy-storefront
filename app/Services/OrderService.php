@@ -2,14 +2,14 @@
 
 namespace App\Service;
 
-use App\Models\Orders;
-use App\Models\Products;
 use App\Helpers\Constants;
-use App\Mail\UserOrderPlaced;
 use App\Mail\StoreOrderPlaced;
+use App\Mail\UserOrderPlaced;
+use App\Models\Orders;
 use App\Models\PaymentRecords;
-use Illuminate\Support\Facades\Mail;
+use App\Models\Products;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Mail;
 
 class OrderService
 {
@@ -51,9 +51,16 @@ class OrderService
 
     public function getUserOrders($username)
     {
-        return Orders::with(['store','products'])->without(['products.store'])->whereHas('buyer', function (Builder $query) use ($username) {
+        return Orders::with(['store', 'products'])->whereHas('buyer', function (Builder $query) use ($username) {
             $query->username($username);
         })->paginate(2);
+    }
+
+    public function getStoreOrders($store_slug)
+    {
+        return Orders::with('products')->whereHas('store', function (Builder $query) use ($store_slug) {
+            $query->where('slug', $store_slug);
+        })->paginate(50);
     }
 
     /**

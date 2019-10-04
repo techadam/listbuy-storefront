@@ -28,4 +28,10 @@ class OrdersController extends Controller
         return $this->success($orders);
     }
 
+    public function getAuthStoreOrders(Request $request)
+    {
+        $orders = $this->order_service->getStoreOrders($request->user()->store->slug);
+        return $this->success($orders);
+    }
+
 }

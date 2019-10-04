@@ -54,6 +54,7 @@ Route::namespace ('Api')->group(function () {
             Route::put('/{store}', 'StoreController@update');
             Route::post('{store}/bank', 'StoreBankDetailsController@saveUserStoreBankDetails');
             Route::put('{store}/bank', 'StoreBankDetailsController@updateUserStoreBankDetails');
+            Route::get('{store_slug}/orders', 'OrdersController@getAuthStoreOrders');
         });
 
         Route::prefix('product')->group(function () {
@@ -67,7 +68,7 @@ Route::namespace ('Api')->group(function () {
             Route::get('/active', 'ProductsController@getActiveStoresProducts');
         });
 
-        Route::prefix('order')->group(function () {
+        Route::prefix('orders')->group(function () {
             Route::get('/me', 'OrdersController@getUserOrders');
         });
 
