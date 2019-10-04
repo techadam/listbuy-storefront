@@ -46,7 +46,7 @@ class OrderService
 
             return collect($order)->except(['products', 'store']);
         } else {
-            return ["message" => $payment_res['error']];
+            return ["error" => $payment_res['error']];
         }
 
     }
