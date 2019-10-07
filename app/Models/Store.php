@@ -20,6 +20,8 @@ class Store extends Model
         'buyers_location',
         'products_type',
         'accepted_currencies',
+        'state_code',
+        'country_code',
     ];
 
     protected $casts = [

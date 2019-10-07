@@ -22,6 +22,8 @@ class CreateStoresTable extends Migration
             $table->string('products_type');
             $table->string('buyers_location');
             $table->text('description');
+            $table->string('state_code');
+            $table->string('country_code');
             $table->string('accepted_currencies');
             $table->boolean('is_active')->default(false);
             $table->timestamps();

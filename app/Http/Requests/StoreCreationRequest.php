@@ -19,6 +19,8 @@ class StoreCreationRequest extends CustomFormRequest
             'buyers_location' => 'required',
             'products_type' => 'required',
             'accepted_currencies' => 'required|array',
+            'state_code' => 'required|exists:states,code',
+            'country_code' => 'required',
         ];
     }
 }
