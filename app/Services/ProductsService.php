@@ -65,7 +65,9 @@ class ProductsService
     {
         $product = Products::where('slug', $product_slug)->firstOrFail();
         $cloudinaryIds = Arr::pluck($product->images, 'cloudinary_id');
-        Cloudder::destroyImages($cloudinaryIds);
+        if (isset($cloudinaryIds) && count($cloudinaryIds)) {
+            Cloudder::destroyImages($cloudinaryIds);
+        }
         $product->images()->delete();
         return $product->delete();
     }
