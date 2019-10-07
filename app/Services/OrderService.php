@@ -87,6 +87,9 @@ class OrderService
             case Constants::STRIPE_PAYMENT;
                 $payment_service = new StripePaymentService();
                 break;
+            case Constants::VOGUE_PAYMENT;
+                $payment_service = new VoguePaymentService();
+                break;
 
             default:
                 false;
