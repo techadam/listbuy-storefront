@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('store_id')->nullable();
             $table->string('firstname');
             $table->string('lastname');
-            $table->string('email')->unique();
+            $table->string('email')->nullable();
             $table->string('username')->unique();
             $table->enum('role', ['seller', 'buyer', 'admin']);
             $table->string('password');

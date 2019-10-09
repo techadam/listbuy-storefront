@@ -11,7 +11,7 @@ class Products extends Model
 {
     use HasSlug;
     protected $with = ['images'];
-    protected $fillable = ['name', 'description', 'price', 'product_type', 'weight', 'stock', 'status', 'shipping_option', 'slug'];
+    protected $fillable = ['name','store_id', 'description', 'price', 'product_type', 'weight', 'stock', 'status', 'shipping_option', 'slug'];
 
     /**
      * Get the options for generating the slug.
