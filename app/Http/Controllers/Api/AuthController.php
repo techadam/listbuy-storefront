@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthLoginRequest;
 use App\Http\Requests\AuthRegisterRequest;
 use App\Models\User;
 use App\Notifications\VerificationCode;
@@ -51,14 +52,19 @@ class AuthController extends Controller
      *
      * Uses basic authentication and returns a Json Web Token
      */
-    public function login(Request $request, UserService $user_service)
+    public function login(AuthLoginRequest $request, UserService $user_service)
     {
-        $credentials = $request->only('email', 'password');
-
+        $input = $request->validated();
+        if (\is_numeric($input['email_phone'])) {
+            $credentials['phone'] = $input['email_phone'];
+        } else {
+            $credentials['email'] = $input['email_phone'];
+        }
+        $credentials['password'] = $input['password'];
         // attempt authorization
         if (!$token = JWTAuth::attempt($credentials)) {
             // authorization failed
-            return $this->notFound('Invalid email or password!', $credentials);
+            return $this->notFound('Invalid credentials entered!', $credentials);
         }
 
         $user = $user_service->getUserInfo(auth()->user()->username, ['store', 'store.bank_details']);
