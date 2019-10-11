@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Mail\PasswordResetMail;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Mail\PasswordResetMail;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -69,7 +70,7 @@ class ForgotPasswordController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return $this->badRequest($validator->messages()->toArray());
+            return $this->badRequest("Validation error", $validator->messages()->toArray());
         }
 
         $user = User::where(['email' => $request->email, 'password_reset_code' => $request->reset_code])->first();
