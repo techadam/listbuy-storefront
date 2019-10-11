@@ -6,13 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthLoginRequest;
 use App\Http\Requests\AuthRegisterRequest;
 use App\Models\User;
-use App\Notifications\VerificationCode;
 use App\Service\AuthService;
 use App\Service\UserService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use JWTAuth;
-use Propaganistas\LaravelPhone\PhoneNumber;
 
 class AuthController extends Controller
 {
@@ -32,17 +29,11 @@ class AuthController extends Controller
     public function register(AuthRegisterRequest $request)
     {
         $validated_data = $request->validated();
-        $validated_data['password'] = Hash::make($validated_data["password"]);
-        $validated_data['phone'] = (string) PhoneNumber::make($validated_data['phone'], $validated_data['country_code']);
-        $validated_data['phone_otp'] = mt_rand(1000, 9999);
-        $user = User::create($validated_data);
-        $user->notify(new VerificationCode($user->phone));
+        $data = $this->auth_service->registerUser($validated_data, true);
 
-        $token = JWTAuth::fromUser($user);
         return $this->success([
-            'id' => $user->id,
-            'token' => $token,
-            'user' => $user,
+            'token' => $data['token'],
+            'user' => $data['user'],
         ]);
 
     }
@@ -52,23 +43,13 @@ class AuthController extends Controller
      *
      * Uses basic authentication and returns a Json Web Token
      */
-    public function login(AuthLoginRequest $request, UserService $user_service)
+    public function login(AuthLoginRequest $request)
     {
-        $input = $request->validated();
-        if (\is_numeric($input['email_phone'])) {
-            $credentials['phone'] = $input['email_phone'];
-        } else {
-            $credentials['email'] = $input['email_phone'];
+        $data = $this->auth_service->loginUser($request->validated());
+        if (isset($data['error'])) {
+            return $this->notFound($data['error'], $data['data']);
         }
-        $credentials['password'] = $input['password'];
-        // attempt authorization
-        if (!$token = JWTAuth::attempt($credentials)) {
-            // authorization failed
-            return $this->notFound('Invalid credentials entered!', $credentials);
-        }
-
-        $user = $user_service->getUserInfo(auth()->user()->username, ['store', 'store.bank_details']);
-        return $this->success(['token' => $token, 'user' => $user]);
+        return $this->success($data);
     }
 
     /**
