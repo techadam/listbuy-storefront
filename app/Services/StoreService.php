@@ -44,6 +44,10 @@ class StoreService
     public function getStore($slug)
     {
         return Store::with(['owner'])->where('slug', $slug)->first();
+    }
 
+    public function getAllStores($limit = 50)
+    {
+        return Store::with(['owner'])->paginate($limit);
     }
 }
