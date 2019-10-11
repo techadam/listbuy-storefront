@@ -35,7 +35,7 @@ class StoreService
     {
         if (isset($data['logo'])) {
             Cloudder::upload($data['logo'], null, array("use_filename" => true, "folder" => env('PRODUCT_LISTING_IMAGE_CLOUD_PATH')));
-            $store->logo()->update(['url' => Cloudder::getResult()['secure_url'], 'cloudinary_id' => Cloudder::getResult()['public_id']]);
+            StoreImages::updateOrCreate(['store_id' => $store->id], ['url' => Cloudder::getResult()['secure_url'], 'cloudinary_id' => Cloudder::getResult()['public_id']]);
         }
 
         $store->update($data);
