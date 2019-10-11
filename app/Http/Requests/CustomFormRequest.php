@@ -22,6 +22,6 @@ class CustomFormRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException($this->badRequest("Validation Error",$validator->errors()));
+        throw new HttpResponseException($this->badRequest($validator->errors()->first(),$validator->errors()));
     }
 }
