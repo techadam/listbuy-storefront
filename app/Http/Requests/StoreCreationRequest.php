@@ -19,8 +19,9 @@ class StoreCreationRequest extends CustomFormRequest
             'buyers_location' => 'required',
             'products_type' => 'required',
             'accepted_currencies' => 'required|array',
-            'state_code' => 'required|exists:states,code',
             'country_code' => 'required',
+            'state_code' => 'required_if:country_code,ng|exists:states,code',
+            'logo' => 'nullable|string|base64image|base64mimes:jpeg,png,jpg,svg|base64max:5048',
         ];
     }
 }

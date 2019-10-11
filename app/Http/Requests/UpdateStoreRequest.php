@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
 class UpdateStoreRequest extends CustomFormRequest
 {
     /**
@@ -19,6 +17,7 @@ class UpdateStoreRequest extends CustomFormRequest
             'buyers_location' => 'string',
             'products_type' => 'string',
             'accepted_currencies' => 'array',
+            'logo' => 'string|base64image|base64mimes:jpeg,png,jpg,svg|base64max:5048',
         ];
     }
 }

@@ -28,6 +28,8 @@ class Store extends Model
         'accepted_currencies' => 'array', // Will cast to (Array)
     ];
 
+    protected $with = ['logo'];
+
     protected $hidden = ['created_at', 'updated_at'];
 
     /**
@@ -62,6 +64,11 @@ class Store extends Model
     public function bank_details()
     {
         return $this->hasOne(StoreBankDetails::class);
+    }
+
+    public function logo()
+    {
+        return $this->hasOne(StoreImages::class);
     }
 
     /* Scope a query to only include active stores.
