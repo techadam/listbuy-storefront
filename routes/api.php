@@ -48,6 +48,10 @@ Route::namespace ('Api')->group(function () {
             Route::put('/password/change', 'AuthController@ChangePassword');
         });
 
+        Route::prefix('user')->group(function () {
+            Route::put('/{username}', 'UserController@updateUserDetails');
+        });
+
         Route::prefix('store')->group(function () {
             Route::get('/user/me', 'StoreController@getUserStore');
             Route::post('/', 'StoreController@store');
@@ -80,6 +84,19 @@ Route::namespace ('Api')->group(function () {
             Route::post('/delivery/tariffs', 'ImportController@importDeliveryTariffs');
         });
 
+    });
+
+});
+
+/* Admin routes */
+Route::namespace ('Api')->prefix('admin')->group(function () {
+    Route::post('/register', 'AdminController@register');
+    Route::post('/login', 'AdminController@login');
+
+    Route::group(['middleware' => ['auth.jwt', 'auth.admin']], function () {
+        Route::get('/users', 'AdminController@getAllUsers');
+        Route::get('/stores', 'AdminController@getAllStores');
+        Route::get('/orders', 'AdminController@getAllOrders');
     });
 
 });
