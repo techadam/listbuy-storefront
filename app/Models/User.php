@@ -77,9 +77,19 @@ class User extends Authenticatable
      * @return \Illuminate\Database\Eloquent\Builder
      */
 
-    public function scopeUsername($query,$username)
+    public function scopeUsername($query, $username)
     {
         return $query->where('username', $username);
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'username';
     }
 
 }
