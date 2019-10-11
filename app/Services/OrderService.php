@@ -65,6 +65,11 @@ class OrderService
         })->paginate(50);
     }
 
+    public function getAllOrders($limit = 50)
+    {
+        return Orders::with(['store', 'buyer', 'products'])->paginate($limit);
+    }
+
     /**
      *  Calculates and returns total price of order
      * @param $order
