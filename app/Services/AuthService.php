@@ -2,11 +2,13 @@
 
 namespace App\Service;
 
-use App\Models\User;
-use App\Notifications\VerificationCode;
-use App\Service\UserService;
-use Illuminate\Support\Facades\Hash;
 use JWTAuth;
+use App\Models\User;
+use App\Service\UserService;
+use App\Mail\UserRegistrationMail;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Notifications\VerificationCode;
 use Propaganistas\LaravelPhone\PhoneNumber;
 
 class AuthService
@@ -31,6 +33,7 @@ class AuthService
             $user->notify(new VerificationCode($user->phone));
         }
         $token = JWTAuth::fromUser($user);
+        Mail::to(["email" => $user->email])->send(new UserRegistrationMail());
 
         return ['user' => $user, 'token' => $token];
     }
