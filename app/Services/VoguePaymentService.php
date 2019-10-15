@@ -2,9 +2,9 @@
 
 namespace App\Service;
 
-use Unirest\Request;
 use App\Helpers\Constants;
 use App\Interfaces\PaymentServiceInterface;
+use Unirest\Request;
 
 class VoguePaymentService implements PaymentServiceInterface
 {
@@ -29,7 +29,11 @@ class VoguePaymentService implements PaymentServiceInterface
     public function contactApiProvider($order_data)
     {
         try {
-            $url = "https://voguepay.com/?v_transaction_id={$order_data['reference_id']}&type=json&demo=true";
+            if (\env('APP_ENV') == "production") {
+                $url = "https://voguepay.com/?v_transaction_id={$order_data['reference_id']}&type=json";
+            } else {
+                $url = "https://voguepay.com/?v_transaction_id={$order_data['reference_id']}&type=json&demo=true";
+            }
 
             $headers = array('Content-Type' => 'application/json');
             $response = Request::get($url, $headers);
