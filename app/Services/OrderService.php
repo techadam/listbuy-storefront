@@ -70,6 +70,11 @@ class OrderService
         return Orders::with(['store', 'buyer', 'products'])->paginate($limit);
     }
 
+    public function updateOrders(Orders $order, $data)
+    {
+        return tap($order)->update($data);
+    }
+
     /**
      *  Calculates and returns total price of order
      * @param $order

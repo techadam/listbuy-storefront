@@ -74,6 +74,7 @@ Route::namespace ('Api')->group(function () {
 
         Route::prefix('orders')->group(function () {
             Route::get('/me', 'OrdersController@getUserOrders');
+            Route::put('/{order}', 'OrdersController@updateOrder');
         });
 
         Route::prefix('import')->group(function () {
@@ -83,6 +84,7 @@ Route::namespace ('Api')->group(function () {
             Route::post('/delivery/weight', 'ImportController@importDeliveryWeight');
             Route::post('/delivery/tariffs', 'ImportController@importDeliveryTariffs');
         });
+
 
     });
 

@@ -42,4 +42,13 @@ class Orders extends Model
         return $this->hasMany(OrderProducts::class, "order_id");
     }
 
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'generated_id';
+    }
 }

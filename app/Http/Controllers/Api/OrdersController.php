@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\ProcessOrderRequest;
-use App\Service\OrderService;
+use App\Models\Orders;
 use Illuminate\Http\Request;
+use App\Service\OrderService;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateOrderRequest;
+use App\Http\Requests\ProcessOrderRequest;
 
 class OrdersController extends Controller
 {
@@ -29,6 +31,12 @@ class OrdersController extends Controller
     {
         $orders = $this->order_service->getUserOrders($request->user()->username);
         return $this->success($orders);
+    }
+
+    public function updateOrder(UpdateOrderRequest $request, Orders $order)
+    {
+        $order = $this->order_service->updateOrders($order, $request->validated());
+        return $this->success($order);
     }
 
     public function getAuthStoreOrders(Request $request)
