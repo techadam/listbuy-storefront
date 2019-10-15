@@ -13,7 +13,7 @@ class UpdateOrderRequest extends CustomFormRequest
     public function rules()
     {
         return [
-            'status' => 'in:pending,completed',
+            'status' => 'in:pending,shipped,completed,cancelled',
         ];
     }
 }

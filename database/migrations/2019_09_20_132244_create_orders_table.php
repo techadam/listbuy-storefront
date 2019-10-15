@@ -26,7 +26,7 @@ class CreateOrdersTable extends Migration
             $table->string('dest_state');
             $table->string('dest_country');
             $table->text('shipping_address');
-            $table->enum('status', ['pending','completed'])->default("pending");
+            $table->enum('status',['pending', 'shipped', 'completed', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }
