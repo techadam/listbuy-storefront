@@ -9,7 +9,6 @@ use App\Models\User;
 use App\Service\AuthService;
 use App\Service\UserService;
 use Illuminate\Http\Request;
-use JWTAuth;
 
 class AuthController extends Controller
 {
@@ -55,20 +54,16 @@ class AuthController extends Controller
     /**
      * Refresh Access Token
      *
-     * Uses basic authentication and returns a Json Web Token
      */
     public function refresh(Request $request)
     {
-        if ($request->header('Authorization')) {
-            $token = explode(' ', $request->header('Authorization'))[1];
-
-            $refreshed_token = JWTAuth::refresh($token);
-            return $this->success([
-                'token' => $refreshed_token,
-            ]);
+        $token = explode(' ', $request->header('Authorization'))[1];
+        try {
+            $newToken = $this->auth_service->refreshToken($token);
+            return $this->success(['access_token' => $newToken], "Token refreshed");
+        } catch (\Throwable $th) {
+            return $this->badRequest($th->getMessage());
         }
-        return $this->badRequest('invalid "Authorization" header');
-
     }
 
     /**

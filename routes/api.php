@@ -17,6 +17,7 @@ Route::namespace ('Api')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('/register', 'AuthController@register');
         Route::post('/login', 'AuthController@login');
+        Route::post('/refresh', 'AuthController@refresh');
         Route::post('/verify/{user}', 'AuthController@verify');
 
         Route::get('/password/verify/{otp}', 'ForgotPasswordController@verifyResetCode');

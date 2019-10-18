@@ -2,13 +2,13 @@
 
 namespace App\Service;
 
-use JWTAuth;
-use App\Models\User;
-use App\Service\UserService;
 use App\Mail\UserRegistrationMail;
+use App\Models\User;
+use App\Notifications\VerificationCode;
+use App\Service\UserService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use App\Notifications\VerificationCode;
+use JWTAuth;
 use Propaganistas\LaravelPhone\PhoneNumber;
 
 class AuthService
@@ -70,5 +70,11 @@ class AuthService
         $user->password = Hash::make($new_password);
         $user->save();
         return $user;
+    }
+
+    public function refreshToken(string $oldToken)
+    {
+        $newToken = JWTAuth::refresh($oldToken);
+        return $newToken;
     }
 }
