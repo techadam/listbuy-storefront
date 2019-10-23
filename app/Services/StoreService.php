@@ -42,8 +42,12 @@ class StoreService
         return $store->fresh('logo');
     }
 
-    public function getStoreProducts(Store $store, $limit = 50)
+    public function getStoreProducts(Store $store, $params = false, $limit = 50)
     {
+        if(isset($params['min_price']) && isset($params['max_price'])){
+            $product_service = new \App\Service\ProductsService();
+            return $product_service->filterProductsByPrice($params['min_price'],$params['max_price'],$store->id);
+        }
         return $store->products()->paginate($limit);
     }
 

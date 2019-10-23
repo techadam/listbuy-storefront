@@ -66,6 +66,7 @@ Route::namespace ('Api')->group(function () {
             Route::post('/', 'ProductsController@addProduct');
             Route::put('/{product}', 'ProductsController@updateProduct');
             Route::delete('/{slug}', 'ProductsController@deleteProduct');
+            Route::delete('/image/{product_image}', 'ProductsController@deleteProductImage');
         });
 
         Route::prefix('products')->group(function () {

@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Models\ProductImages;
 use App\Models\Products;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
@@ -70,6 +71,26 @@ class ProductsService
         }
         $product->images()->delete();
         return $product->delete();
+    }
+
+    public function filterProductsByPrice(int $min_price, int $max_price, int $store_id = null, $limit = 50)
+    {
+        if ($store_id) {
+            $products = Products::where('store_id', $store_id)
+                ->whereBetween('price', [$min_price, $max_price])->paginate($limit);
+        } else {
+            $products = Products::whereBetween('price', [$min_price, $max_price])->get();
+
+        }
+        return $products;
+    }
+
+    public function deleteProductImage(ProductImages $image)
+    {
+        if ($image->cloudinary_id) {
+            Cloudder::destroyImages($image->cloudinary_id);
+        }
+        return $image->delete();
     }
 
 }

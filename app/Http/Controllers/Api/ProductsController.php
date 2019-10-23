@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\ProductImages;
 use App\Models\Products;
 use App\Service\ProductsService;
 
@@ -43,7 +44,16 @@ class ProductsController extends Controller
     public function deleteProduct($product_slug)
     {
         $product_data = $this->product_service->deleteProduct($product_slug);
-        return $this->success($product_data,"$product_slug deleted successfully!");
+        return $this->success($product_data, "$product_slug deleted successfully!");
+    }
+
+    public function deleteProductImage(ProductImages $product_image)
+    {
+        $res = $this->product_service->deleteProductImage($product_image);
+        if (!$res) {
+            return $this->badRequest("Failed to delete Product Image!");
+        }
+        return $this->success($res, "Product Image deleted successfully!");
     }
 
     public function getActiveStoresProducts()

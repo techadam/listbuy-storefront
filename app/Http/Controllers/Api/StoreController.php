@@ -34,7 +34,7 @@ class StoreController extends Controller
 
     public function getStoreProducts(Store $store)
     {
-        $products = $this->store_service->getStoreProducts($store);
+        $products = $this->store_service->getStoreProducts($store,\request()->query());
         return $this->success($products);
     }
 
