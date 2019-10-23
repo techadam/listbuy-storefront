@@ -25,11 +25,11 @@ Route::namespace ('Api')->group(function () {
         Route::post('/password/reset', 'ForgotPasswordController@resetPassword');
     });
 
-    Route::prefix('product')->group(function () {
+    Route::prefix('products')->group(function () {
         Route::get('/{slug}', 'ProductsController@getProduct');
     });
 
-    Route::prefix('store')->group(function () {
+    Route::prefix('stores')->group(function () {
         Route::get('/{store}', 'StoreController@getStoreDetails');
         Route::get('/{store}/products', 'StoreController@getStoreProducts');
     });
@@ -39,7 +39,7 @@ Route::namespace ('Api')->group(function () {
         Route::get('/states', 'DeliveryController@getDeliveryStates');
     });
 
-    Route::prefix('order')->group(function () {
+    Route::prefix('orders')->group(function () {
         Route::post('/process', 'OrdersController@processOrder');
     });
 
@@ -49,11 +49,11 @@ Route::namespace ('Api')->group(function () {
             Route::put('/password/change', 'AuthController@ChangePassword');
         });
 
-        Route::prefix('user')->group(function () {
+        Route::prefix('users')->group(function () {
             Route::put('/{username}', 'UserController@updateUserDetails');
         });
 
-        Route::prefix('store')->group(function () {
+        Route::prefix('stores')->group(function () {
             Route::get('/user/me', 'StoreController@getUserStore');
             Route::post('/', 'StoreController@store');
             Route::put('/{store}', 'StoreController@update');
@@ -62,17 +62,15 @@ Route::namespace ('Api')->group(function () {
             Route::get('me/orders/', 'OrdersController@getAuthStoreOrders');
         });
 
-        Route::prefix('product')->group(function () {
+        Route::prefix('products')->group(function () {
             Route::post('/', 'ProductsController@addProduct');
             Route::put('/{product}', 'ProductsController@updateProduct');
             Route::delete('/{slug}', 'ProductsController@deleteProduct');
             Route::delete('/image/{product_image}', 'ProductsController@deleteProductImage');
-        });
-
-        Route::prefix('products')->group(function () {
             Route::get('/', 'ProductsController@getProducts');
             Route::get('/active', 'ProductsController@getActiveStoresProducts');
         });
+
 
         Route::prefix('orders')->group(function () {
             Route::get('/me', 'OrdersController@getUserOrders');
