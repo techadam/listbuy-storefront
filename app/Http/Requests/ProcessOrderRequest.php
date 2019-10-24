@@ -31,7 +31,7 @@ class ProcessOrderRequest extends CustomFormRequest
                 Rule::in(Constants::STRIPE_PAYMENT, Constants::VOGUE_PAYMENT),
             ],
             'reference_id' => Rule::requiredIf($data['payment_method'] != Constants::STRIPE_PAYMENT),
-            'dest_state' => 'required|exists:states,code',
+            'dest_state' => 'required',
             'dest_country' => 'required',
             'shipping_address' => 'required',
             'stripe_source' => Rule::requiredIf($data['payment_method'] == Constants::STRIPE_PAYMENT),
