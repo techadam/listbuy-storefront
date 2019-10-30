@@ -11,6 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::namespace ('Store')->group(function() {
+    Route::get("/", 'StoreController@index');
+
+    Route::prefix('stores')->group(function () {
+        Route::get('/{store}', 'StoreController@getStoreDetails');
+    });
+    Route::get('/{store}/product/{slug}', 'StoreController@getProductBySlug');
 });
