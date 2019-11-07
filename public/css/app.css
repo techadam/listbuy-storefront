@@ -16982,12 +16982,72 @@ readers do not read off random characters that represent icons */
 body {
   padding: 0 !important;
   margin: 0 !important;
-  font-family: "Lato", sans-serif;
+  font-family: "Titillium Web", sans-serif;
+}
+
+.font-light {
+  font-weight: 300;
 }
 
 .btn-theme {
   background: #2B237C;
   color: #fff;
+}
+
+.btn-theme:hover {
+  color: #fff;
+}
+
+.cart-drop-btn {
+  font-size: 0.7rem;
+}
+
+div.wrapper {
+  border-top: 3px solid #2B237C;
+}
+
+.nav-content {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+          align-items: center;
+}
+
+.nav-items {
+  display: -webkit-box;
+  display: flex;
+  list-style: none;
+  -webkit-box-align: center;
+          align-items: center;
+}
+
+.nav-items li {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.nav-items li a {
+  color: #888;
+}
+
+.cart-icon {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -10px;
+  left: 8px;
+  background: red;
+  height: 17px;
+  width: 17px;
+  vertical-align: middle;
+  text-align: center;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0.7rem;
 }
 
 .prod-image-cont {
@@ -16997,6 +17057,13 @@ body {
           justify-content: center;
   -webkit-box-align: center;
           align-items: center;
+}
+
+form#add-to-cart {
+  display: inline !important;
+  margin: 0em !important;
+  -webkit-margin-after: 0em !important;
+          margin-block-end: 0em !important;
 }
 
 a:focus,
@@ -17029,5 +17096,114 @@ ul.footer-menu li a {
 
 #product-desc {
   font-size: 0.8rem !important;
+}
+
+.action-btn {
+  font-size: 0.8rem !important;
+}
+
+.full-content {
+  height: auto;
+  min-height: 100vh;
+}
+
+.bg-lightgrey {
+  background: #FAFAFA !important;
+}
+
+.ml-10 {
+  margin-left: 6rem !important;
+}
+
+.mr-10 {
+  margin-right: 6rem !important;
+}
+
+.checkout-address-form label {
+  font-size: 0.9rem;
+}
+
+.ship-btn {
+  padding: 40px 15px;
+}
+
+.address-box {
+  margin-bottom: 3rem;
+}
+
+.address-box table tr td {
+  font-size: 0.8rem;
+}
+
+.address-box table tr:first-child td {
+  border-top: none !important;
+}
+
+.btn.btn-link.btn-small {
+  padding: 0px !important;
+  margin: 0px !important;
+  font-size: 0.8rem;
+}
+
+.prod-img {
+  height: 200px !important;
+  overflow-y: hidden;
+}
+
+.storefinder-search {
+  height: auto;
+  min-height: 50vh;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+}
+
+.storefind-search {
+  width: 100% !important;
+}
+
+.radius-left {
+  border-radius: 20px 0px 0px 20xp;
+}
+
+.radius-right {
+  border-radius: 0px 20px 20px 0xp;
+}
+
+.product-card:hover {
+  box-shadow: 2px 1px 3px 2px #ccc !important;
+}
+
+#phoneAddon {
+  display: none;
+}
+
+@media only screen and (max-width: 1174px) {
+  .full-side {
+    margin-left: 0px !important;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .checkout-img,
+  .slide-images {
+    display: none !important;
+  }
+
+  .checkout-product {
+    font-size: 1rem !important;
+  }
+
+  .row.full-content {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+            flex-direction: column-reverse;
+  }
 }
 

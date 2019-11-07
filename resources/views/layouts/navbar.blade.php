@@ -1,14 +1,19 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto"></ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
-    </div>
-  </nav>
+<div class="wrapper border-bottom">
+  <div class="container">
+      <nav class="bg-default px-3">
+          <div class="nav-content py-2">
+            <h5><a href="/stores/{{$slug}}" class="text-dark">Listbuy</a></h5>
+            <div class="nav-menu">
+              <ul class="nav-items pt-2">
+                <li>
+                  <a href="/" class="text-dark"><i class="fa fa-search"></i> Store finder</a>
+                </li>
+                <li>
+                    <a href="/cart" class="cart-icon"><i class="fa fa-shopping-cart"></i><span class="cart-badge">{{Cart::count()}}</span></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+      </nav>
+  </div>
+</div>
